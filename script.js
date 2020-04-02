@@ -4,19 +4,22 @@ const email = document.getElementById("email");
 const password = document.getElementById("password");
 const password2 = document.getElementById("password2");
 
-// SHOW INPUT ERROR MESSAGE
-function showError(input, message) {
-  const formControl = input.parentElement;
-  formControl.className = "form-control error";
+// EVENT LISTENER
+form.addEventListener("submit", function(e) {
+  e.preventDefault();
 
-  const small = formControl.querySelector("small");
-  small.innerText = message;
-}
+  checkRequired([username, email, password, password2]);
+  checkLength(username, 3, 15);
+  checkLength(password, 6, 25);
+  checkEmail(email);
+  checkPasswordsMatch(password, password2);
+});
 
-// SHOW SUCCESS MESSAGE
-function showSuccess(input) {
-  const formControl = input.parentElement;
-  formControl.className = "form-control success";
+// CHECK PASSWORDS MATCH
+function checkPasswordsMatch(input1, input2) {
+  if (input1.value !== input2.value) {
+    showError(input2, "Passwords do no match");
+  }
 }
 
 // CHECK EMAIL IS VALID
@@ -29,15 +32,9 @@ function checkEmail(input) {
   }
 }
 
-// CHECK REQUIRED FIELDS
-function checkRequired(inputArr) {
-  inputArr.forEach(function(input) {
-    if (input.value.trim() === "") {
-      showError(input, `${getFieldName(input)} is required`);
-    } else {
-      showSuccess(input);
-    }
-  });
+// GET FIELD NAME + TO UPPERCASE FIRST LETTER
+function getFieldName(input) {
+  return input.id.charAt(0).toUpperCase() + input.id.slice(1);
 }
 
 // CHECK INPUT LENGTH
@@ -57,25 +54,28 @@ function checkLength(input, min, max) {
   }
 }
 
-// CHECK PASSWORDS MATCH
-function checkPasswordsMatch(input1, input2) {
-  if (input1.value !== input2.value) {
-    showError(input2, "Passwords do no match");
-  }
+// CHECK REQUIRED FIELDS
+function checkRequired(inputArr) {
+  inputArr.forEach(function(input) {
+    if (input.value.trim() === "") {
+      showError(input, `${getFieldName(input)} is required`);
+    } else {
+      showSuccess(input);
+    }
+  });
 }
 
-// GET FIELD NAME + TO UPPERCASE FIRST LETTER
-function getFieldName(input) {
-  return input.id.charAt(0).toUpperCase() + input.id.slice(1);
+// SHOW SUCCESS MESSAGE
+function showSuccess(input) {
+  const formControl = input.parentElement;
+  formControl.className = "form-control success";
 }
 
-// EVENT LISTENER
-form.addEventListener("submit", function(e) {
-  e.preventDefault();
+// SHOW INPUT ERROR MESSAGE
+function showError(input, message) {
+  const formControl = input.parentElement;
+  formControl.className = "form-control error";
 
-  checkRequired([username, email, password, password2]);
-  checkLength(username, 3, 15);
-  checkLength(password, 6, 25);
-  checkEmail(email);
-  checkPasswordsMatch(password, password2);
-});
+  const small = formControl.querySelector("small");
+  small.innerText = message;
+}
