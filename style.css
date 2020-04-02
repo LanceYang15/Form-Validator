@@ -3,6 +3,7 @@
   --success-color: #2ecc71;
   --error-color: #e74c3c;
   --color-blue: #3948db;
+  --sans-font: "Comic Neue", cursive;
 }
 
 * {
@@ -29,6 +30,7 @@ body {
 h2 {
   text-align: center;
   margin: 0 0 20px;
+  font-family: var(--sans-font);
 }
 
 .form {
