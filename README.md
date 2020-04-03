@@ -11,4 +11,4 @@ Client-side form validation, helps ensure data submitted matches the requirement
 ## Built With 
  * HTML
  * CSS
- * Javascript
+ * JavaScript
